@@ -20,6 +20,8 @@ const NO_CHOICE = -1;
 let language = DICTIONARY.en;
 let gameboard;
 let currentPlayer;
+let pvc = false;
+
 
 
 clearScreen();
@@ -40,7 +42,7 @@ async function start() {
         if (chosenAction == MENU_CHOICES.MENU_CHOICE_START_GAME) {
             await runGame();
         } else if (chosenAction == MENU_CHOICES.MENU_CHOICE_SHOW_SETTINGS) {
-            ///TODO: Needs implementing
+            await settings();
         } else if (chosenAction == MENU_CHOICES.MENU_CHOICE_EXIT_GAME) {
             clearScreen();
             process.exit();
@@ -48,6 +50,34 @@ async function start() {
 
     } while (true)
 
+}
+
+async function settings() { 
+    clearScreen();
+    print("Press 1 to swap Game Mode");
+    print("Press 2 to swap language");
+
+    let swapGameMode = 1;
+    let swapLanguages = 2;
+    let playerChoiceSettings = await askQuestion("");
+    if (playerChoiceSettings = swapGameMode) {
+        if (pvc == true) {
+            pvc = false;
+        } else {
+            pvc = true;
+        }
+    }
+    if (playerChoiceSettings = swapLanguages) {
+        if (language == DICTIONARY.en) {
+            language = DICTIONARY.hu;
+        } else {
+            language = DICTIONARY.en;
+        }
+        
+    }
+    if (playerChoiceSettings != swapGameMode && playerChoiceSettings != swapLanguages) {
+        showMenu();
+    }
 }
 
 async function runGame() {
