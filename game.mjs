@@ -237,6 +237,8 @@ async function getGameMoveFromCurrentPlayer() {
     do {
         let rawInput = await askQuestion("Place your mark at: ");
         position = rawInput.split(" ");
+        position[0] = position[0] - 1;
+        position[1] = position[1] - 1;
     } while (isValidPositionOnBoard(position) == false);
     return position;
 }
