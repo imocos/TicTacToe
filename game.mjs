@@ -153,6 +153,26 @@ function evaluateGameState() {
         sum = 0;
     }
 
+    for (let diag = 0; diag < GAME_BOARD_SIZE; row++) {
+        sum += gameboard[diag][diag];
+    } 
+
+    if (Math.abs(sum) == 3) {
+        state = sum;
+    }
+
+    sum = 0;
+
+    for (let diag = 0; diag < GAME_BOARD_SIZE; row++) {
+        sum += gameboard[diag][2 - diag];
+    } 
+
+    if (Math.abs(sum) == 3) {
+        state = sum;
+    }
+
+    sum = 0;
+
     let winner = state / 3;
     return winner;
 }
