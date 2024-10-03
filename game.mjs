@@ -54,20 +54,20 @@ async function start() {
 
 async function settings() { 
     clearScreen();
-    print("Press 1 to swap Game Mode");
-    print("Press 2 to swap language");
+    print(language.SWAP_GAME_MODE);
+    print(language.SWAP_LANGUAGE);
 
     let swapGameMode = 1;
     let swapLanguages = 2;
     let playerChoiceSettings = await askQuestion("");
-    if (playerChoiceSettings = swapGameMode) {
+    if (playerChoiceSettings == swapGameMode) {
         if (pvc == true) {
             pvc = false;
         } else {
             pvc = true;
         }
     }
-    if (playerChoiceSettings = swapLanguages) {
+    if (playerChoiceSettings == swapLanguages) {
         if (language == DICTIONARY.en) {
             language = DICTIONARY.hu;
         } else {
@@ -76,7 +76,7 @@ async function settings() {
         
     }
     if (playerChoiceSettings != swapGameMode && playerChoiceSettings != swapLanguages) {
-        showMenu();
+    await showMenu();
     }
 }
 
@@ -98,10 +98,10 @@ async function showMenu() {
     while (!validChoice) {
         // Display our menu to the player.
         clearScreen();
-        print(ANSI.COLOR.YELLOW + "MENU" + ANSI.RESET);
-        print("1. Play Game");
-        print("2. Settings");
-        print("3. Exit Game");
+        print(ANSI.COLOR.YELLOW + language.MENU + ANSI.RESET);
+        print(language.PLAY_GAME);
+        print(language.SETTINGS);
+        print(language.EXIT_GAME);
 
         // Wait for the choice.
         choice = await askQuestion("");
@@ -145,13 +145,13 @@ async function askWantToPlayAgain() {
 function showGameSummary(outcome) {
     clearScreen();
     if (outcome == -10) {
-        print("Tie!");
+        print(language.TIE);
     } else {
         let winningPlayer = (outcome > 0) ? 1 : 2;
-        print("Winner is player " + winningPlayer);
+        print(language.WINNER_IS + winningPlayer);
     }
     showGameBoardWithCurrentState();
-    print("GAME OVER");
+    print(language.GAME_OVER);
 }
 
 function changeCurrentPlayer() {
@@ -235,7 +235,7 @@ async function getGameMoveFromCurrentPlayer() {
     }
     let position = null;
     do {
-        let rawInput = await askQuestion("Place your mark at: ");
+        let rawInput = await askQuestion(language.PLACE_MARK);
         position = rawInput.split(" ");
         position[0] = position[0] - 1;
         position[1] = position[1] - 1;
@@ -282,11 +282,11 @@ function isValidPositionOnBoard(position) {
 }
 
 function showHUD() {
-    let playerDescription = "one";
+    let playerDescription = language.ONE;
     if (PLAYER_2 == currentPlayer) {
-        playerDescription = "two";
+        playerDescription = language.TWO;
     }
-    print("Player " + playerDescription + " it is your turn");
+    print(language.PLAYER + playerDescription + language.YOUR_TURN);
 }
 
 function showGameBoardWithCurrentState() {
