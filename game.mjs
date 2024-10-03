@@ -122,7 +122,7 @@ async function playGame() {
         clearScreen();
         showGameBoardWithCurrentState();
         showHUD();
-        let move = await getGameMoveFromtCurrentPlayer();
+        let move = await getGameMoveFromCurrentPlayer();
         updateGameBoardState(move);
         outcome = evaluateGameState();
         changeCurrentPlayer();
@@ -229,14 +229,30 @@ function updateGameBoardState(move) {
     gameboard[move[ROW_ID]][move[COLUMN_ID]] = currentPlayer;
 }
 
-async function getGameMoveFromtCurrentPlayer() {
+async function getGameMoveFromCurrentPlayer() {
+    if (currentPlayer == PLAYER_2 && pvc) {
+        return getMoveFromComputer();
+    }
     let position = null;
     do {
         let rawInput = await askQuestion("Place your mark at: ");
         position = rawInput.split(" ");
-    } while (isValidPositionOnBoard(position) == false)
+    } while (isValidPositionOnBoard(position) == false);
+    return position;
+}
 
-    return position
+function getMoveFromComputer() {
+    let maxIndex = 3;
+    let colComputer = 0;
+    let rowComputer = 0;
+    let prevPositionsAI = "";
+
+    do {
+        colComputer = Math.floor(Math.random() * maxIndex);
+        rowComputer = Math.floor(Math.random() * maxIndex);
+        prevPositionsAI = (colComputer + " " + rowComputer).split(" ");
+    } while (isValidPositionOnBoard(prevPositionsAI) == false);
+    return prevPositionsAI;
 }
 
 function isValidPositionOnBoard(position) {

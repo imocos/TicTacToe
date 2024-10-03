@@ -5,8 +5,8 @@ const DICTIONARY = {
         CONFIRM: "y",
     },
     hu: {
-        PLAY_AGAIN_QUESTION: "Spille en gang til (Ja/nei)? ",
-        CONFIRM: "j",
+        PLAY_AGAIN_QUESTION: "Szeretnél újra játszani? (igen/nem) ",
+        CONFIRM: "i",
     }
     
 }
