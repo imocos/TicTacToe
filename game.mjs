@@ -293,12 +293,12 @@ function showGameBoardWithCurrentState() {
         for (let currentCol = 0; currentCol < GAME_BOARD_SIZE; currentCol++) {
             let cell = gameboard[currentRow][currentCol];
             if (cell == 0) {
-                rowOutput += "_ ";
+                rowOutput += " ▯ ";
             }
             else if (cell > 0) {
-                rowOutput += "X ";
+                rowOutput += "\x1b[31m X\x1b[0m ";
             } else {
-                rowOutput += "O  ";
+                rowOutput += "\x1b[34m O\x1b[0m ";
             }
         }
 
