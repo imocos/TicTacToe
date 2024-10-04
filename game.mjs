@@ -7,6 +7,8 @@ import showSplashScreen from "./splash.mjs";
 const GAME_BOARD_SIZE = 3;
 const PLAYER_1 = 1;
 const PLAYER_2 = -1;
+const NUMBER_FOR_TIE = -10;
+const EMPTY_RUBRIC = 0;
 
 // These are the valid choices for the menu.
 const MENU_CHOICES = {
@@ -144,7 +146,7 @@ async function askWantToPlayAgain() {
 
 function showGameSummary(outcome) {
     clearScreen();
-    if (outcome == -10) {
+    if (outcome == NUMBER_FOR_TIE) {
         print(language.TIE);
     } else {
         let winningPlayer = (outcome > 0) ? 1 : 2;
@@ -168,7 +170,7 @@ function evaluateGameState() {
             sum += gameboard[row][col];
         }
 
-        if (Math.abs(sum) == 3) {
+        if (Math.abs(sum) == GAME_BOARD_SIZE) {
             state = sum;
         }
         sum = 0;
@@ -180,7 +182,7 @@ function evaluateGameState() {
             sum += gameboard[row][col];
         }
 
-        if (Math.abs(sum) == 3) {
+        if (Math.abs(sum) == GAME_BOARD_SIZE) {
             state = sum;
         }
 
@@ -191,7 +193,7 @@ function evaluateGameState() {
         sum += gameboard[diag][diag];
     } 
 
-    if (Math.abs(sum) == 3) {
+    if (Math.abs(sum) == GAME_BOARD_SIZE) {
         state = sum;
     }
 
@@ -201,7 +203,7 @@ function evaluateGameState() {
         sum += gameboard[diag][2 - diag];
     } 
 
-    if (Math.abs(sum) == 3) {
+    if (Math.abs(sum) == GAME_BOARD_SIZE) {
         state = sum;
     }
 
@@ -210,16 +212,16 @@ function evaluateGameState() {
     let tie = true;
     for (let col = 0; col < GAME_BOARD_SIZE; col++) {
         for (let row = 0; row < GAME_BOARD_SIZE; row++) {
-            if (gameboard[col][row] == 0) {
+            if (gameboard[col][row] == EMPTY_RUBRIC) {
                 tie = false;
             }
         }
     }
     if (tie) {
-        return -10;
+        return NUMBER_FOR_TIE;
     }
 
-    let winner = state / 3;
+    let winner = state / GAME_BOARD_SIZE;
     return winner;
 }
 
